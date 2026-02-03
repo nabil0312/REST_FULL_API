@@ -7,6 +7,16 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class ScoreResource extends JsonResource
 {
+    public $status;
+    public $message;
+
+
+    public function __construct($status, $message , $resource)
+    {
+        $this->status = $status;
+        $this->message = $message;
+        return parent::__construct($resource);
+    }
     /**
      * Transform the resource into an array.
      *
@@ -15,11 +25,10 @@ class ScoreResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->_id,
-            'nama' => $this->nama,
-            'tugas' => $this->tugas,
-            'uts' => $this->uts,
-            'uas' => $this->uas,
+            'success' => $this->status,
+            'message' => $this->message,
+            'data' => $this->resource,
+                
         ];
     }
 }

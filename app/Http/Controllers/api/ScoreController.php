@@ -15,7 +15,9 @@ class ScoreController extends Controller
      */
     public function index()
     {
-        return Score::all()->toResourceCollection(ScoreResource::class);
+        $data = Score::all();
+        // return Score::all()->toResourceCollection(ScoreResource::class);
+        return new ScoreResource(true,'menampilkan semua data',$data);
     }
 
     /**
@@ -33,7 +35,7 @@ class ScoreController extends Controller
             return response()->json($validator->errors());
         }
         $data = Score::create($request->all());
-        return new ScoreResource($data);
+        return new ScoreResource(true,'Data berhasil ditambahkan',$data);
     }
     
 
@@ -68,7 +70,7 @@ class ScoreController extends Controller
         
         $siswa->update($request->all());
         // return new ScoreResource($siswa);
-        return response()->json(['message' => 'Score updated successfully'], 200);    
+        return new ScoreResource(true,'Data berhasil diubah',$siswa);   
     }
 
     /**
@@ -82,6 +84,6 @@ class ScoreController extends Controller
         }
 
         $siswa->delete();
-        return response()->json(['message' => 'Score deleted successfully'], 200);
+        return new ScoreResource(true,'Data berhasil dihapus',$siswa);
     }
 }

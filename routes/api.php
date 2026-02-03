@@ -8,4 +8,4 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::apiResource('score', ScoreController::class);
+Route::apiResource('/score', ScoreController::class);
