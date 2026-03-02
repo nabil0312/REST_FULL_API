@@ -44,7 +44,8 @@ class ScoreController extends Controller
      */
     public function show(string $id)
     {
-        return Score::findOrFail($id)->toResource(ScoreResource::class);
+        $score = Score::findOrFail($id);
+        return new ScoreResource(true, 'Data ditemukan', $score);
     }
 
     /**
@@ -54,7 +55,7 @@ class ScoreController extends Controller
     {
         $siswa = Score::findOrFail($id);
         if (!$siswa) {
-            $siswa->response()->json(['message' => 'Score not found'], 404);
+            return response()->json(['message' => 'Score not found'], 404);
         }
 
         $validator = Validator::make($request->all(), [
@@ -80,7 +81,7 @@ class ScoreController extends Controller
     {
         $siswa = Score::findOrFail($id);
         if (!$siswa) {
-            $siswa->response()->json(['message' => 'Score not found'], 404);
+            return response()->json(['message' => 'Score not found'], 404);
         }
 
         $siswa->delete();
